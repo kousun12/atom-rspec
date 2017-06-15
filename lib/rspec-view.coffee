@@ -20,8 +20,8 @@ class RSpecView extends ScrollView
 
   constructor: (filePath) ->
     super
-    console.log "File path:", filePath
-    @filePath = filePath
+    @filePath = filePath.substr(1)
+    console.log "File path:", @filePath
 
     @output  = @find(".rspec-output")
     @spinner = @find(".rspec-spinner")

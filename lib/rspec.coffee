@@ -76,7 +76,9 @@ module.exports =
     line = cursor.getBufferRow() + 1
     console.log "Line", line
 
-    @openUriFor(editor.getPath(), line)
+    specDir = atom.config.get("rspec.spec_directory")
+    relativePath = atom.project.relativizePath(editor.getPath())[1]
+    @openUriFor(specDir + "/" + relativePath, line)
 
   runLast: ->
     return unless @lastFile?
@@ -87,11 +89,13 @@ module.exports =
     editor = atom.workspace.getActiveTextEditor()
     return unless editor?
 
-    @openUriFor(editor.getPath())
+    specDir = atom.config.get("rspec.spec_directory")
+    relativePath = atom.project.relativizePath(editor.getPath())[1]
+    @openUriFor(specDir + "/" + relativePath)
 
   runAll: ->
     project = atom.project
     return unless project?
 
-    @openUriFor(project.getPaths()[0] +
+    @openUriFor(project.relativizePath(project.getPaths()[0])[1] +
     "/" + atom.config.get("rspec.spec_directory"), @lastLine)
